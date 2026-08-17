@@ -1,31 +1,29 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
-import { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
 
-function LoginContent() {
+export default function SignupPage() {
   const { status } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const next = searchParams.get("callbackUrl") || searchParams.get("next") || "/studio";
-
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.push(next);
+      router.push("/studio");
     }
-  }, [status, router, next]);
+  }, [status, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim() || !password) {
-      toast.error("Enter your email and password");
+      toast.error("Enter an email and password");
       return;
     }
 
@@ -35,16 +33,16 @@ function LoginContent() {
         email: email.trim(),
         password,
         redirect: false,
-        callbackUrl: next,
+        callbackUrl: "/studio",
       });
 
       if (res?.error) {
-        toast.error(res.error || "Could not sign in");
+        toast.error(res.error || "Could not open the account");
       } else {
-        router.push(next);
+        router.push("/studio");
       }
     } catch (err) {
-      toast.error("Could not sign in");
+      toast.error("Could not open the account");
     } finally {
       setIsSubmitting(false);
     }
@@ -58,13 +56,26 @@ function LoginContent() {
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-2xl font-black text-primary shadow-md shadow-primary/15">
             M
           </div>
-          <h1 className="text-2xl font-black uppercase tracking-tight">Log in to Maison Iro</h1>
+          <h1 className="text-2xl font-black uppercase tracking-tight">Open a Maison Iro account</h1>
           <p className="px-2 text-xs font-semibold leading-relaxed text-secondary-text">
-            Use the email the house works with. Any password opens the studio.
+            For the house, the boutique, or the family line. Any email and password will do.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 pt-2">
+          <div className="space-y-1.5">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-secondary-text">
+              House name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Adjoa Mensah"
+              autoComplete="name"
+              className="w-full rounded-lg border border-divider bg-bg-page px-3.5 py-2.5 text-xs text-white placeholder-secondary-text/50 focus:border-primary focus:outline-none"
+            />
+          </div>
           <div className="space-y-1.5">
             <label className="block text-[11px] font-bold uppercase tracking-wider text-secondary-text">
               Email
@@ -87,7 +98,7 @@ function LoginContent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              autoComplete="current-password"
+              autoComplete="new-password"
               className="w-full rounded-lg border border-divider bg-bg-page px-3.5 py-2.5 text-xs text-white placeholder-secondary-text/50 focus:border-primary focus:outline-none"
             />
           </div>
@@ -96,31 +107,17 @@ function LoginContent() {
             disabled={isSubmitting}
             className="w-full cursor-pointer rounded-full bg-primary py-3.5 text-xs font-bold text-white shadow-md transition-all hover:bg-primary-hover disabled:opacity-50"
           >
-            {isSubmitting ? "Signing in…" : "Log in"}
+            {isSubmitting ? "Opening the house…" : "Sign up"}
           </button>
         </form>
 
         <p className="text-center text-[11px] text-secondary-text">
-          New to the house?{" "}
-          <Link href="/signup" className="font-bold text-primary hover:underline">
-            Sign up
+          Already have a seat?{" "}
+          <Link href="/login" className="font-bold text-primary hover:underline">
+            Log in
           </Link>
         </p>
       </div>
     </div>
-  );
-}
-
-export default function Login() {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-dvh items-center justify-center bg-bg-page text-primary-text">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-        </div>
-      }
-    >
-      <LoginContent />
-    </Suspense>
   );
 }

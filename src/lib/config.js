@@ -1,5 +1,6 @@
 const config = {
-  appName: "Ai Tryon",
+  appName: "Maison Iro",
+  theme: "slate-indigo",
   auth: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,

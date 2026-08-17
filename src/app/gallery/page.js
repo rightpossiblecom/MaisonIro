@@ -115,13 +115,12 @@ export default function DashboardPage() {
           <p className="text-sm text-zinc-200 leading-relaxed mb-8">
             Access your personal wardrobe dashboard, review outfit fits, and download high-resolution virtual photos.
           </p>
-          <button
-            onClick={() => signIn("google")}
+          <Link
+            href="/login"
             className="w-full flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl text-sm font-extrabold text-white bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 shadow-lg shadow-violet-500/10 active:scale-[0.98] transition-all cursor-pointer"
           >
-            <FaGoogle className="text-xs" />
-            <span>Sign in with Google</span>
-          </button>
+            <span>Log in to the wardrobe</span>
+          </Link>
         </div>
       </div>
     );
@@ -137,7 +136,7 @@ export default function DashboardPage() {
             <p className="text-xs sm:text-sm text-zinc-300 mt-1.5 font-medium">Review, share, and delete your AI generated tries</p>
           </div>
           <Link
-            href="/"
+            href="/studio"
             className="inline-flex items-center justify-center gap-2 px-4.5 py-2.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-xs font-extrabold rounded shadow-lg shadow-violet-500/5 transition-all w-fit cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
           >
             <FaPlus className="text-[10px]" /> Design New Outfit
@@ -155,7 +154,7 @@ export default function DashboardPage() {
               You haven't generated any virtual fits yet. Upload a portrait and garment photo to create styled outfits!
             </p>
             <Link
-              href="/"
+              href="/studio"
               className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white text-sm font-extrabold rounded shadow-lg shadow-violet-500/10 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
               <FaPlus className="text-xs" /> Design Custom Outfit

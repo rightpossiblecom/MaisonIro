@@ -3,21 +3,30 @@
 import Link from "next/link";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2026;
 
   return (
-    <footer className="w-full border-t border-divider/40 bg-bg-page py-6 text-center text-xs text-secondary-text mt-auto">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          &copy; {currentYear} AI SaaS Studio. All rights reserved.
-        </div>
-        <div className="flex gap-4">
-          <Link href="/terms" className="hover:text-primary-text transition-colors">
-            Terms of Service
+    <footer className="mt-auto w-full border-t border-divider/40 bg-bg-page py-6 text-center text-xs text-secondary-text">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6 lg:px-8">
+        <div>&copy; {currentYear} Maison Iro. The house keeps the line.</div>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <Link href="/product" className="transition-colors hover:text-primary-text">
+            Product
           </Link>
-          <span className="opacity-30">•</span>
-          <Link href="/privacy" className="hover:text-primary-text transition-colors">
-            Privacy Policy
+          <Link href="/team" className="transition-colors hover:text-primary-text">
+            Team
+          </Link>
+          <Link href="/about" className="transition-colors hover:text-primary-text">
+            About
+          </Link>
+          <Link href="/contact" className="transition-colors hover:text-primary-text">
+            Contact
+          </Link>
+          <Link href="/terms" className="transition-colors hover:text-primary-text">
+            Terms
+          </Link>
+          <Link href="/privacy" className="transition-colors hover:text-primary-text">
+            Privacy
           </Link>
         </div>
       </div>

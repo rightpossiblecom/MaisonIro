@@ -116,7 +116,7 @@ export async function POST(req) {
           }
         }
       } catch (err) {
-        console.warn("MuAPI call failed, falling back to local mocks:", err.message);
+        console.warn("Fitting service unavailable, using house archive:", err.message);
       }
     } else {
       // Mock mode

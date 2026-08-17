@@ -2,70 +2,96 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
+import { isDemoMode } from "./demo-mode";
+import { demoUser } from "./demo-store";
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
-  session: {
-    strategy: "jwt",
-  },
-  providers: [
+const demo = isDemoMode();
+
+const providers = [
+  CredentialsProvider({
+    id: "credentials",
+    name: "Email",
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+      apiKey: { label: "API Key", type: "password" },
+    },
+    async authorize(credentials) {
+      if (credentials?.email && credentials?.password) {
+        const email = String(credentials.email).trim().toLowerCase();
+        if (!email.includes("@")) throw new Error("Enter a valid email");
+        const user = demoUser(`demo_${email}`, email);
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          credits: user.credits,
+          customApiKey: user.customApiKey,
+        };
+      }
+
+      if (demo) return null;
+
+      if (!credentials?.apiKey) {
+        throw new Error("Email and password are required");
+      }
+      const apiKey = credentials.apiKey.trim();
+      if (apiKey.length < 5) {
+        throw new Error("Invalid API key format");
+      }
+
+      const dummyEmail = `apikey_${apiKey.slice(-8)}@muapi.local`;
+      let dbUser = await prisma.user.findFirst({
+        where: {
+          OR: [{ customApiKey: apiKey }, { email: dummyEmail }],
+        },
+      });
+
+      if (!dbUser) {
+        dbUser = await prisma.user.create({
+          data: {
+            name: "API Key User",
+            email: dummyEmail,
+            customApiKey: apiKey,
+            credits: 0,
+          },
+        });
+      } else if (!dbUser.customApiKey) {
+        dbUser = await prisma.user.update({
+          where: { id: dbUser.id },
+          data: { customApiKey: apiKey },
+        });
+      }
+
+      return {
+        id: dbUser.id,
+        name: dbUser.name,
+        email: dbUser.email,
+        image: dbUser.image || null,
+        credits: dbUser.credits,
+        customApiKey: dbUser.customApiKey || apiKey,
+        isApiKeyUser: true,
+      };
+    },
+  }),
+];
+
+if (!demo && process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  providers.unshift(
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    CredentialsProvider({
-      id: "credentials",
-      name: "API Key",
-      credentials: {
-        apiKey: { label: "MuAPI Key", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.apiKey) {
-          throw new Error("API Key is required");
-        }
-        const apiKey = credentials.apiKey.trim();
-        if (apiKey.length < 5) {
-          throw new Error("Invalid API key format");
-        }
+    })
+  );
+}
 
-        const dummyEmail = `apikey_${apiKey.slice(-8)}@muapi.local`;
-        let dbUser = await prisma.user.findFirst({
-          where: {
-            OR: [
-              { customApiKey: apiKey },
-              { email: dummyEmail }
-            ]
-          }
-        });
-
-        if (!dbUser) {
-          dbUser = await prisma.user.create({
-            data: {
-              name: "API Key User",
-              email: dummyEmail,
-              customApiKey: apiKey,
-              credits: 0,
-            }
-          });
-        } else if (!dbUser.customApiKey) {
-          dbUser = await prisma.user.update({
-            where: { id: dbUser.id },
-            data: { customApiKey: apiKey }
-          });
-        }
-
-        return {
-          id: dbUser.id,
-          name: dbUser.name,
-          email: dbUser.email,
-          image: dbUser.image || null,
-          credits: dbUser.credits,
-          customApiKey: dbUser.customApiKey || apiKey,
-          isApiKeyUser: true,
-        };
-      }
-    }),
-  ],
+export const authOptions = {
+  adapter: demo ? undefined : PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+  },
+  providers,
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {
@@ -84,7 +110,7 @@ export const authOptions = {
         try {
           const dbUser = await prisma.user.findUnique({
             where: { id: userId },
-            select: { credits: true, customApiKey: true }
+            select: { credits: true, customApiKey: true },
           });
           if (dbUser) {
             token.credits = dbUser.credits;
@@ -104,7 +130,7 @@ export const authOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "maison-iro-demo-secret-change-me",
   pages: {
     signIn: "/login",
   },

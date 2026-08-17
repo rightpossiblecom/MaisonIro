@@ -15,8 +15,8 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "TryOn AI - Virtual Outfit Try-On Studio",
-  description: "Upload a photo of yourself and a photo of any outfit, and virtually try it on instantly using advanced photorealistic AI.",
+  title: "Maison Iro — Virtual fitting house",
+  description: "Fit African cloth to a real body before the line leaves the shop. The studio for houses in Lagos, Nairobi, Accra, and Johannesburg.",
 };
 
 export default function RootLayout({ children }) {
@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} h-full w-full`} data-theme={theme}>
-      <body className={`${inter.className} h-full w-full flex flex-col antialiased bg-bg-page text-primary-text font-sans lg:overflow-hidden overflow-y-auto`}>
+      <body className={`${inter.className} min-h-full w-full flex flex-col antialiased bg-bg-page text-primary-text font-sans`}>
         <Providers>
           <Navbar />
-          <div className="flex-1 flex flex-col overflow-hidden min-h-0">
+          <div className="flex-1 flex flex-col min-h-0">
             {children}
           </div>
         </Providers>

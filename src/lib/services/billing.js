@@ -1,11 +1,17 @@
 import { stripe } from "../stripe";
 import config from "../config";
 import { UserService } from "./user";
+import { isDemoMode } from "../demo-mode";
 
 export const BillingService = {
   async createCheckoutSession(userId, planId) {
     const plan = config.stripe.plans[planId];
     if (!plan) throw new Error("Invalid plan selected");
+
+    if (isDemoMode() || !process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY.includes("your_")) {
+      await UserService.addCredits(userId, plan.credits);
+      return `/pricing?success=true&pack=${planId}`;
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

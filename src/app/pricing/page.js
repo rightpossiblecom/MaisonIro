@@ -1,7 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Footer from "@/components/Footer";
 import { FaCheck, FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
@@ -15,12 +16,22 @@ const PLANS = [
 ];
 
 export default function Pricing() {
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
+  const router = useRouter();
   const [loadingPlan, setLoadingPlan] = useState(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("success") === "true") {
+      toast.success("Credits added to the house account.");
+      update?.();
+    }
+  }, [update]);
 
   const handleCheckout = async (planId) => {
     if (status !== "authenticated") {
-      toast.error("You must sign in with Google to purchase credit packages.");
+      router.push("/login?next=/pricing");
       return;
     }
 

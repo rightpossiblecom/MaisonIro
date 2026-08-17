@@ -5,8 +5,7 @@ import { useSession, signOut, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { IoClose, IoMenu } from "react-icons/io5";
-import { FiMoon, FiSun, FiLogOut, FiDollarSign, FiPlus, FiUser, FiKey, FiCheck, FiX, FiTrash2 } from "react-icons/fi";
-import { SiVercel } from "react-icons/si";
+import { FiLogOut, FiDollarSign, FiPlus, FiUser, FiKey, FiCheck, FiX, FiTrash2 } from "react-icons/fi";
 import config from "@/lib/config";
 import toast from "react-hot-toast";
 
@@ -30,17 +29,23 @@ export default function Navbar() {
     }
   }, [session?.user?.customApiKey]);
 
-  const appMatch = pathname ? pathname.match(/^\/app\/([^\/]+)/) : null;
-  const currentAppId = appMatch ? appMatch[1] : null;
+  const [navReady, setNavReady] = useState(false);
+  useEffect(() => {
+    setNavReady(true);
+  }, []);
 
-  const navLinks = currentAppId
+  const marketingPaths = ["/", "/product", "/team", "/login", "/signup", "/about", "/contact", "/privacy", "/terms"];
+  const currentPath = pathname || "/";
+  const isMarketing = !navReady || marketingPaths.includes(currentPath);
+
+  const navLinks = isMarketing
     ? [
-        { name: "Workspace", path: `/app/${currentAppId}` },
-        { name: "Gallery", path: `/app/${currentAppId}/gallery` },
-        { name: "Pricing", path: `/app/${currentAppId}/pricing` },
+        { name: "Product", path: "/product" },
+        { name: "Team", path: "/team" },
+        { name: "Pricing", path: "/pricing" },
       ]
     : [
-        { name: "Workspace", path: "/" },
+        { name: "Workspace", path: "/studio" },
         { name: "Gallery", path: "/gallery" },
         { name: "Pricing", path: "/pricing" },
       ];
@@ -122,7 +127,7 @@ export default function Navbar() {
         {/* Desktop Navigation Links */}
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => {
-            const isActive = pathname === link.path;
+            const isActive = navReady && currentPath === link.path;
             return (
               <Link
                 key={link.name}
@@ -142,33 +147,30 @@ export default function Navbar() {
 
         {/* Desktop Actions Section */}
         <div className="hidden md:flex items-center gap-3">
-          
-          {/* Vercel Deploy Button */}
-          <a
-            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fcommon-saas-template"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full border border-divider px-4 py-1.5 text-xs font-bold text-secondary-text hover:text-primary-text hover:bg-bg-card transition-colors shadow-sm"
-          >
-            <SiVercel className="text-xs text-white" />
-            <span>Deploy</span>
-          </a>
-
-          {/* Add/Manage API Key - Directly visible in Navbar */}
-          <button
-            onClick={() => setIsApiKeyModalOpen(true)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
-              isApiKeyActive
-                ? "bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20"
-                : "bg-bg-page/50 border-divider text-secondary-text hover:text-white hover:border-primary/40"
-            }`}
-          >
-            <FiKey className={isApiKeyActive ? "text-amber-400" : "text-secondary-text"} />
-            <span>{isApiKeyActive ? "Custom API Key" : "Add API Key"}</span>
-          </button>
+          {!isMarketing && (
+            <button
+              onClick={() => setIsApiKeyModalOpen(true)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all cursor-pointer ${
+                isApiKeyActive
+                  ? "bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20"
+                  : "bg-bg-page/50 border-divider text-secondary-text hover:text-white hover:border-primary/40"
+              }`}
+            >
+              <FiKey className={isApiKeyActive ? "text-amber-400" : "text-secondary-text"} />
+              <span>{isApiKeyActive ? "Custom API Key" : "Add API Key"}</span>
+            </button>
+          )}
 
           {status === "authenticated" ? (
             <div className="flex items-center">
+              {isMarketing && (
+                <Link
+                  href="/studio"
+                  className="mr-3 rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-white hover:bg-primary-hover"
+                >
+                  Studio
+                </Link>
+              )}
               {/* Credit Balance indicator */}
               <div className="flex items-center h-9 border border-divider rounded-l bg-bg-page/30 overflow-hidden pr-2">
                 <span className="font-bold text-[13px] px-3 flex items-center text-primary-text gap-1">
@@ -228,12 +230,20 @@ export default function Navbar() {
               </div>
             </div>
           ) : (
-            <Link
-              href="/login"
-              className="bg-primary text-white px-5 py-1.5 rounded-full text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20"
-            >
-              Sign In
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/login"
+                className="px-4 py-1.5 rounded-full text-sm font-bold text-primary-text border border-divider hover:bg-bg-card transition-all"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="bg-primary text-white px-5 py-1.5 rounded-full text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20"
+              >
+                Sign up
+              </Link>
+            </div>
           )}
         </div>
 
@@ -274,6 +284,7 @@ export default function Navbar() {
               </Link>
             ))}
 
+            {!isMarketing && (
             <button
               onClick={() => {
                 setIsOpen(false);
@@ -286,19 +297,9 @@ export default function Navbar() {
                 <span>{isApiKeyActive ? "Manage Custom API Key" : "Add API Key"}</span>
               </div>
             </button>
+            )}
 
             <div className="h-px bg-divider/50 my-2" />
-
-            {/* Vercel Deploy in Mobile menu */}
-            <a
-              href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSamurAIGPT%2Fcommon-saas-template"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2 rounded-full border border-divider py-3 text-xs font-bold text-secondary-text hover:text-primary-text hover:bg-bg-card transition-all"
-            >
-              <SiVercel className="text-xs text-white" />
-              <span>Clone & Deploy Template</span>
-            </a>
 
             {status === "authenticated" ? (
               <button
@@ -312,13 +313,22 @@ export default function Navbar() {
                 <span>Sign Out</span>
               </button>
             ) : (
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
-                className="flex w-full items-center justify-center rounded bg-primary text-white py-3 text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20 mt-2"
-              >
-                Sign In
-              </Link>
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center justify-center rounded bg-primary text-white py-3 text-sm font-bold hover:bg-primary-hover transition-all shadow-md shadow-primary/20 mt-2"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setIsOpen(false)}
+                  className="flex w-full items-center justify-center rounded border border-divider py-3 text-sm font-bold text-primary-text hover:bg-bg-card transition-all mt-2"
+                >
+                  Sign up
+                </Link>
+              </>
             )}
           </nav>
         </div>
