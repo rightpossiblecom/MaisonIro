@@ -42,9 +42,15 @@ export default function Navbar() {
     ? [
         { name: "Product", path: "/product" },
         { name: "Team", path: "/team" },
+        { name: "Studio", path: "/studio" },
+        { name: "Gallery", path: "/gallery" },
         { name: "Pricing", path: "/pricing" },
+        { name: "About", path: "/about" },
+        { name: "Contact", path: "/contact" },
       ]
     : [
+        { name: "Product", path: "/product" },
+        { name: "Team", path: "/team" },
         { name: "Workspace", path: "/studio" },
         { name: "Gallery", path: "/gallery" },
         { name: "Pricing", path: "/pricing" },
@@ -125,7 +131,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-5">
           {navLinks.map((link) => {
             const isActive = navReady && currentPath === link.path;
             return (

@@ -38,7 +38,7 @@ No leftover “TryOn AI”, MuAPI, Botika, or “open-source alternative” voic
 
 ## 4. Product + Team in the nav
 
-Header and footer on marketing pages: **Product**, **Team**, Pricing, About, plus Log in / Sign up.
+Header and footer on marketing pages list **every** public page: Product, Team, **Studio**, **Gallery**, Pricing, About, Contact, plus Log in / Sign up. The in-app rooms stay in the marketing menu — a visitor on `/team` can open `/studio` and `/gallery` from the same nav.
 
 - `/product` — Maison Iro intro, README demo video (`public/product/demo.mp4`), ≥4 screenshots of this UI, how it works, CTA to Sign up.
 - `/team` — ≥2 people (Adjoa Mensah, Kelechi Okonkwo, Naledi Mokoena), roles, bios, LinkedIn, photos.

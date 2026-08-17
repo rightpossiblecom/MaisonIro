@@ -16,6 +16,15 @@ export default function Footer() {
           <Link href="/team" className="transition-colors hover:text-primary-text">
             Team
           </Link>
+          <Link href="/studio" className="transition-colors hover:text-primary-text">
+            Studio
+          </Link>
+          <Link href="/gallery" className="transition-colors hover:text-primary-text">
+            Gallery
+          </Link>
+          <Link href="/pricing" className="transition-colors hover:text-primary-text">
+            Pricing
+          </Link>
           <Link href="/about" className="transition-colors hover:text-primary-text">
             About
           </Link>
