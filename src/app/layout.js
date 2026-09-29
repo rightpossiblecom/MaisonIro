@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import Navbar from "../components/Navbar";
 import config from "@/lib/config";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,8 +16,15 @@ const outfit = Outfit({
 });
 
 export const metadata = {
-  title: "Maison Iro — Virtual fitting house",
-  description: "Fit African cloth to a real body before the line leaves the shop. The studio for houses in Lagos, Nairobi, Accra, and Johannesburg.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: "You upload a photo and a cloth. You see the garment on a person.",
+  robots: { index: true, follow: true },
+  icons: { icon: "/mark.svg" },
+  alternates: { canonical: "/" },
 };
 
 export default function RootLayout({ children }) {

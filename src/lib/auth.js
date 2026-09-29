@@ -130,7 +130,7 @@ export const authOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET || "maison-iro-demo-secret-change-me",
+  secret: process.env.NEXTAUTH_SECRET || "loom-demo-secret-change-me",
   pages: {
     signIn: "/login",
   },

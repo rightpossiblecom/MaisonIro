@@ -1,8 +1,9 @@
 import Footer from "@/components/Footer";
+import { SITE_DOMAIN, SITE_EMAIL } from "@/lib/site";
 
 export const metadata = {
-  title: "Contact — Maison Iro",
-  description: "Write the house.",
+  title: "Contact",
+  description: "Write Loom.",
 };
 
 export default function ContactPage() {
@@ -13,10 +14,10 @@ export default function ContactPage() {
         <h1 className="text-4xl font-black tracking-tight text-white">Write the house.</h1>
         <p className="text-sm leading-relaxed text-zinc-400">
           Boutiques, family lines, and stylists can reach us at{" "}
-          <a href="mailto:house@maisoniro.africa" className="font-bold text-violet-400">
-            house@maisoniro.africa
+          <a href={`mailto:${SITE_EMAIL}`} className="font-bold text-violet-400">
+            {SITE_EMAIL}
           </a>
-          . Accra, Lagos, and Johannesburg desks answer in that order.
+          . The site is {SITE_DOMAIN}. Lagos answers.
         </p>
       </main>
       <Footer />

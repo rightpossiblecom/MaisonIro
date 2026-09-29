@@ -100,7 +100,7 @@ export function demoUser(id, email) {
     users.set(id, {
       id,
       name: email ? email.split("@")[0] : "House member",
-      email: email || `${id}@maisoniro.house`,
+      email: email || "",
       credits: 2400,
       customApiKey: null,
       image: null,

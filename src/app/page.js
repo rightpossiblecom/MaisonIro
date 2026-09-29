@@ -18,7 +18,7 @@ const STEPS = [
   {
     n: "03",
     title: "The fitting",
-    body: "Maison Iro lays the cloth on the body — folds, weight, light. The line is seen before a naira or a shilling leaves the till.",
+    body: "Loom lays the cloth on the body — folds, weight, light. The line is seen before a naira or a shilling leaves the till.",
   },
 ];
 
@@ -44,7 +44,7 @@ const FAQS = [
   },
   {
     q: "Do we still need a photoshoot?",
-    a: "Use Maison Iro to decide the look. Shoot later if the house wants film. Most fittings never needed a studio day — they needed an honest drape.",
+    a: "Use Loom to decide the look. Shoot later if the house wants film. Most fittings never needed a studio day — they needed an honest drape.",
   },
   {
     q: "What does a credit buy?",
@@ -69,13 +69,13 @@ export default function LandingPage() {
                 Virtual fitting house
               </p>
               <h1 className="font-heading text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Fit the cloth to the body.
+                You upload a photo and a cloth.
                 <span className="block bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-                  Keep the house in the family.
+                  You see the garment on a person.
                 </span>
               </h1>
               <p className="max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base">
-                Maison Iro is the fitting room for African fashion houses. See the garment on a real person in Lagos, Nairobi, Accra, or Johannesburg before you cut, shoot, or ship — so the line compounds for the next generation.
+                Loom is the fitting room for African fashion houses. See the garment on a real person in Lagos, Nairobi, Accra, or Johannesburg before you cut, shoot, or ship — so the line compounds for the next generation.
               </p>
               <div className="flex flex-wrap items-center gap-3">
                 <Link
@@ -108,7 +108,7 @@ export default function LandingPage() {
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/product/studio.png"
-                    alt="Maison Iro studio fitting"
+                    alt="Loom studio fitting"
                     className="h-full w-full object-cover object-top"
                   />
                 </div>
@@ -216,7 +216,7 @@ export default function LandingPage() {
           <div className="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8">
             <h2 className="text-3xl font-black tracking-tight text-white sm:text-4xl">Dress the line. Leave something standing.</h2>
             <p className="mx-auto mt-4 max-w-xl text-sm text-zinc-400">
-              Open a Maison Iro account. Fit the next collection on the people who will wear it — and the children who will inherit the shop.
+              Open a Loom account. Fit the next collection on the people who will wear it — and the children who will inherit the shop.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link

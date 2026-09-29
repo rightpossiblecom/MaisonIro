@@ -55,10 +55,8 @@ function LoginContent() {
       <Toaster position="top-right" />
       <div className="relative w-full max-w-md space-y-6 rounded-xl border border-divider bg-bg-card p-8 shadow-2xl">
         <div className="flex flex-col items-center space-y-3 text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-2xl font-black text-primary shadow-md shadow-primary/15">
-            M
-          </div>
-          <h1 className="text-2xl font-black uppercase tracking-tight">Log in to Maison Iro</h1>
+          <img src="/mark.svg" alt="" className="h-14 w-14" />
+          <h1 className="text-2xl font-black uppercase tracking-tight">Log in to Loom</h1>
           <p className="px-2 text-xs font-semibold leading-relaxed text-secondary-text">
             Use the email the house works with. Any password opens the studio.
           </p>

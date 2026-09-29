@@ -1,0 +1,19 @@
+Loom
+
+You upload a photo and a cloth. You see the garment on a person.
+
+https://loomsite.name.ng
+admin@loomsite.name.ng
+
+Paths
+https://loomsite.name.ng/
+https://loomsite.name.ng/product
+https://loomsite.name.ng/team
+https://loomsite.name.ng/pricing
+https://loomsite.name.ng/about
+https://loomsite.name.ng/contact
+https://loomsite.name.ng/jobs
+https://loomsite.name.ng/login
+https://loomsite.name.ng/signup
+https://loomsite.name.ng/privacy
+https://loomsite.name.ng/terms

@@ -2,15 +2,15 @@ import Link from "next/link";
 import Footer from "@/components/Footer";
 
 const SHOTS = [
-  { src: "/product/studio.png", alt: "Maison Iro virtual outfit studio", caption: "Studio — portrait, garment, prompt" },
-  { src: "/product/gallery.png", alt: "Maison Iro wardrobe gallery", caption: "Wardrobe — saved fittings" },
+  { src: "/product/studio.png", alt: "Loom virtual outfit studio", caption: "Studio — portrait, garment, prompt" },
+  { src: "/product/gallery.png", alt: "Loom wardrobe", caption: "Wardrobe — saved fittings" },
   { src: "/product/fitting.png", alt: "Completed fitting output", caption: "Output — cloth on the body" },
-  { src: "/product/pricing.png", alt: "Maison Iro credit packs", caption: "Credits — buy for the collection" },
+  { src: "/product/pricing.png", alt: "Loom credit packs", caption: "Credits — buy for the collection" },
 ];
 
 export const metadata = {
-  title: "Product — Maison Iro",
-  description: "The virtual fitting room for African cloth houses. Studio, wardrobe, and credit packs.",
+  title: "Product",
+  description: "You upload a photo and a cloth. You see the garment on a person.",
 };
 
 export default function ProductPage() {
@@ -20,10 +20,11 @@ export default function ProductPage() {
         <header className="max-w-3xl space-y-4">
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-violet-400">Product</p>
           <h1 className="text-4xl font-black tracking-tight text-white sm:text-5xl">
-            A fitting room that stays with the house.
+            You upload a photo and a cloth.
+            <span className="mt-2 block">You see the garment on a person.</span>
           </h1>
           <p className="text-base leading-relaxed text-zinc-400">
-            African fashion still spends a season’s cash on a shoot before the cloth has been seen on a body. Maison Iro puts the garment on the wearer first — so boutiques in Balogun, houses in Accra, and lines in Sandton keep the money and the look in the family.
+            African fashion still spends a season’s cash on a shoot before the cloth has been seen on a body. Loom puts the garment on the wearer first — so boutiques in Balogun, houses in Accra, and lines in Sandton keep the money and the look in the family.
           </p>
         </header>
 

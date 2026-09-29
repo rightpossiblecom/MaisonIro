@@ -18,8 +18,7 @@ export default function Navbar() {
   const [apiKeyInput, setApiKeyInput] = useState("");
   const [savingKey, setSavingKey] = useState(false);
 
-  const appName = config?.appName || "AI SaaS";
-  const logoLetter = appName.trim().charAt(0).toUpperCase();
+  const appName = config?.appName || "Loom";
 
   const isApiKeyActive = Boolean(session?.user?.customApiKey);
 
@@ -34,7 +33,7 @@ export default function Navbar() {
     setNavReady(true);
   }, []);
 
-  const marketingPaths = ["/", "/product", "/team", "/login", "/signup", "/about", "/contact", "/privacy", "/terms"];
+  const marketingPaths = ["/", "/product", "/team", "/pricing", "/about", "/contact", "/jobs", "/login", "/signup", "/privacy", "/terms"];
   const currentPath = pathname || "/";
   const isMarketing = !navReady || marketingPaths.includes(currentPath);
 
@@ -42,16 +41,13 @@ export default function Navbar() {
     ? [
         { name: "Product", path: "/product" },
         { name: "Team", path: "/team" },
-        { name: "Studio", path: "/studio" },
-        { name: "Gallery", path: "/gallery" },
         { name: "Pricing", path: "/pricing" },
         { name: "About", path: "/about" },
         { name: "Contact", path: "/contact" },
+        { name: "Jobs", path: "/jobs" },
       ]
     : [
-        { name: "Product", path: "/product" },
-        { name: "Team", path: "/team" },
-        { name: "Workspace", path: "/studio" },
+        { name: "Studio", path: "/studio" },
         { name: "Gallery", path: "/gallery" },
         { name: "Pricing", path: "/pricing" },
       ];
@@ -122,9 +118,7 @@ export default function Navbar() {
         
         {/* Logo and Brand Title */}
         <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-[1.02] active:scale-95">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white font-extrabold text-lg shadow-md shadow-primary/30">
-            {logoLetter}
-          </div>
+          <img src="/mark.svg" alt="" className="h-9 w-9" />
           <span className="text-lg font-black tracking-tight text-primary-text text-nowrap">
             {appName}
           </span>
@@ -169,14 +163,6 @@ export default function Navbar() {
 
           {status === "authenticated" ? (
             <div className="flex items-center">
-              {isMarketing && (
-                <Link
-                  href="/studio"
-                  className="mr-3 rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-white hover:bg-primary-hover"
-                >
-                  Studio
-                </Link>
-              )}
               {/* Credit Balance indicator */}
               <div className="flex items-center h-9 border border-divider rounded-l bg-bg-page/30 overflow-hidden pr-2">
                 <span className="font-bold text-[13px] px-3 flex items-center text-primary-text gap-1">

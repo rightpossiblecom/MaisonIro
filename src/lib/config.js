@@ -1,5 +1,5 @@
 const config = {
-  appName: "Maison Iro",
+  appName: "Loom",
   theme: "slate-indigo",
   auth: {
     google: {
